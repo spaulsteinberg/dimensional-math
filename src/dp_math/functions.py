@@ -2,18 +2,55 @@ import numpy as np
 
 
 def cp(usl: float, lsl: float, sigma: float):
+    """
+    Calculate CP
+    :param usl: upper spec tolerance
+    :param lsl: lower spec tolerance
+    :param sigma: sigma
+    :return: CP value
+    """
     return (usl - lsl) / (6 * sigma)
 
 def cpu(usl: float, mean: float, sigma: float):
+    """
+    Calculate CPU
+    :param usl: upper spec tolerance
+    :param mean: mean
+    :param sigma: sigma
+    :return: CPU value
+    """
     return (usl - mean) / (3 * sigma)
 
 def cpl(lsl: float, mean: float, sigma: float):
+    """
+    Calculate CPL
+    :param lsl: lower spec tolerance
+    :param mean: mean
+    :param sigma: sigma
+    :return: CPL value
+    """
     return (mean - lsl) / (3 * sigma)
 
 def cpk(usl: float, lsl: float, mean: float, sigma: float):
+    """
+    Calculate CPK
+    :param usl: upper spec tolerance
+    :param lsl: lower spec tolerance
+    :param mean: mean
+    :param sigma: sigma
+    :return: CPK value
+    """
     return min(cpu(usl, mean, sigma), cpl(lsl, mean, sigma))
 
-def adsr_series(measurements: list[float], usl: float, lsl: float, s: float | None = 1):
+def adsr_series(measurements: list[float], usl: float, lsl: float, s: float | None = 1) -> float | None:
+    """
+    Caculate ADSR over a series of measurements
+    :param measurements: list of deviations
+    :param usl: upper spec tolerance
+    :param lsl: lower spec tolerance
+    :param s: s value
+    :return: ADSR value over a given series
+    """
     num_measurements = len(measurements)
     if num_measurements == 0:
         return None
@@ -37,10 +74,10 @@ def adsr_single(measurement: float, usl: float, lsl: float, s: float | None = 1)
     return ((max(measurement - usl, lsl - measurement) / (usl - lsl)) * b) * s
 
 
-def polyfit(values: float, x: list[int]) -> tuple:
+def polyfit(values: list[float], x: list[int]) -> tuple:
     """
     Calculate the polyfit line
-    :param values: list
+    :param values: list of numbers
     :param x: x dimension
     :return: Tuple of the line and polyfit value
     """
