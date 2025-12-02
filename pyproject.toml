@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "dp-math"  # Must be unique on PyPI
-version = "0.0.2"
+version = "0.0.3"
 authors = [
     {name = "Samuel Steinberg", email = "sampaulsteinberg@gmail.com"}
 ]

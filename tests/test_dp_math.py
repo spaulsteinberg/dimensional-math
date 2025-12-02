@@ -144,3 +144,30 @@ def test_p_negative_slope():
     # Slope should be -5.0
     expected_slope = -5.0
     assert slope == pytest.approx(expected_slope)
+
+
+def test_pist_analyzer():
+    values = [0, 0.1, 0.05, 1.3, 0, None, None, None]
+    usl, lsl = 0.5, -0.7
+    p = PistAnalyzer(usl=usl, lsl=lsl)
+    pist = p.pist(values)
+    assert pist == .8
+
+    values = [None, None, None]
+    assert p.pist(values) == 0
+
+    values = [0, 0.1, 0.05, 1.3, 0, .9, .5, .5, .5, 1.1]
+    assert p.pist(values) == .7
+
+def test_pist_value_error():
+    with pytest.raises(ValueError):
+        PistAnalyzer(usl=1, lsl=-1).pist([])
+
+def test_feature_passing():
+    p = PistAnalyzer(usl=1, lsl=-1)
+    assert p.passing(1) is True
+    assert p.passing(1.1) is False
+    assert p.passing(0.5) is True
+    assert p.passing(-1.1) is False
+    assert p.passing(-1) is True
+    assert p.passing(-0.5) is True
