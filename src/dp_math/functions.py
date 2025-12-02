@@ -79,7 +79,7 @@ def polyfit(values: list[float], x: list[int]) -> tuple:
     Calculate the polyfit line
     :param values: list of numbers
     :param x: x dimension
-    :return: Tuple of the line and polyfit value
+    :return: Tuple of the line and slope
     """
     m, b = np.polyfit(x, values, 1)
     return m * np.array(x) + b, m
